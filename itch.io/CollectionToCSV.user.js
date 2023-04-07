@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Itch Collection CSV Exporter
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/abraxas86/tampermonkey-scripts/blob/main/itch.io/
 // @version      1.2
 // @description  Scroll down to the bottom of your collection, click the button, get CSV of your collection!
 // @author       Abraxas86
