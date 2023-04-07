@@ -18,7 +18,7 @@
     'use strict';
     const raw = [];
     const games = [];
-    var output = "title";
+    var output = "title\n";
 
      waitForKeyElements (".game_link", makeRed);
 
