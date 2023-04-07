@@ -19,19 +19,19 @@
     const raw = [];
     const games = [];
     var output = "";
-  
-    waitForKeyElements (".game_link", makeRed);
+
+     waitForKeyElements (".game_link", makeRed);
+
 
     $('.footer').prepend('<span class="csvButton">Export to CSV</span><p></p>');
-    $('.csvButton').css({'color':'white','background-color':'grey','border-radius':'10px','padding':'15px'});
+    $('.csvButton').css({'color':'white','background-color':'grey','border-radius':'10px','padding':'15px','cursor':'pointer'});
 
-    //Strictly cosmetic.  I think it looks cool, though - just changes the game names to red
+
     function makeRed(){
     $('.game_link').css("color","red");
     }
 
     $('.csvButton').click(function(){
-        
         //these elements will mess up our data for the csv.
         $('.price_value').remove();
         $('.gif_label').remove();
