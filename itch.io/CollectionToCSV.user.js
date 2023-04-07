@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Itch Collection CSV Exporter
-// @namespace    https://github.com/abraxas86/tampermonkey-scripts/raw/main/itch.io/CollectionToCSV.user.js
-// @version      1.1
+// @namespace    http://tampermonkey.net/
+// @version      1.2
 // @description  Scroll down to the bottom of your collection, click the button, get CSV of your collection!
 // @author       Abraxas86
 // @match        https://itch.io/c/*
@@ -18,7 +18,7 @@
     'use strict';
     const raw = [];
     const games = [];
-    var output = "";
+    var output = "title";
 
      waitForKeyElements (".game_link", makeRed);
 
