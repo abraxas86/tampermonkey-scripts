@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Itch Collection CSV Exporter
 // @namespace    https://github.com/abraxas86/tampermonkey-scripts/blob/main/itch.io/
-// @version      2.0
+// @version      2.5
 // @description  Scroll down to the bottom of your collection, click the button, get CSV of your collection!
 // @author       Abraxas86
 // @match        https://itch.io/c/*
@@ -15,12 +15,19 @@
 
 (function() {
     'use strict';
-    const raw = [];
-    const games = [];
-    var output = "title\n";
+    const games  = [];
+    var mode     = "null";
+    var Title    = "";
+    var URL      = "";
+    var output   = "title,url\n";
     var filename = $('.grid_header > h2:nth-child(1)').text();
 
      waitForKeyElements (".game_link", makeRed);
+
+    if (document.querySelector('.game_title a') == null || document.querySelector('.game_title a') == undefined)
+    { mode = "list"; }
+    else
+    { mode = "grid"; }
 
 
     $('.footer').prepend('<span class="csvButton">Export to CSV</span>&nbsp;&nbsp;&nbsp;<input type="text" id="fileName" class="csvText" value=""> <span class="extension">.csv</span><p></p>');
@@ -40,18 +47,34 @@
         $('.gif_label').remove();
 
         //scrape the game names from the code
-        $('.game_title').each(function(){raw.push($(this).text());});
-        // Clean up array.  Raw contains some empty strings that we don't need.
-        for (var i =0; i < raw.length; i++)
-        { if (raw[i] != "") { games.push(raw[i]) } }
+        $('.game_title').each(function()
+                              {
+            //Name o
+            Title = $(this).text();
+
+            //Game URL
+            if (mode == "grid")
+            {
+                URL = this.querySelector('a').href;
+            }
+            else if (mode == "list")
+            {
+                URL = $(this).prop('href');
+            }
+            else
+            { console.error("Error grabbing name/url"); }
+            console.log(URL + " - " + Title);
+            games.push("\"" + Title +"\",\"" + URL + "\""); //sanitizing varibales to prevent commas from breaking stuff
+        });
+
         // Format array for CSV output, sanitizing for titles with commas,
         // and adding a newline at the end of each title
-        for (i = 0; i < games.length; i++)
-        { output = output + "\"" + games[i] + "\"\n" }
+        for (var i = 0; i < games.length; i++)
+        { output = output + games[i] + "\n" }
 
         var filename = document.getElementById("fileName").value;
         if (filename == "")
-        { filename = "collection";}
+        { filename = "collection"; }
 
         filename = filename + ".csv";
 
